@@ -121,18 +121,27 @@ This script will:
 
 The HTTPS URL is only accessible to devices logged into your Tailscale network.
 
-### Public access for a neighbour's iPhone (Tailscale Funnel)
+### Public access for a neighbour's device (Tailscale Funnel)
 
-If the neighbour's device does not have Tailscale installed, enable Funnel to create a publicly reachable HTTPS URL:
+The neighbour opens a Tailscale Funnel URL in their browser — a public HTTPS link that
+Tailscale tunnels directly to the Pi, with no app or account required on their end.
+
+Key points:
+- The URL is a subdomain of `ts.net` — publicly reachable but not guessable
+- Traffic is TLS-encrypted end-to-end
+- No ports are opened on your router; the Pi initiates the outbound tunnel
+- The neighbour needs nothing installed — it is just a URL
+
+Enable Funnel with:
 
 ```bash
 sudo tailscale funnel --bg http://localhost:5000
 ```
 
-The URL is the same Tailscale hostname but now reachable from any browser without Tailscale.
-Note: the subdomain is not guessable, and the app holds no sensitive persistent data.
+The Funnel URL is the same Tailscale hostname used for Serve (`https://<your-pi>.ts.net`),
+but now reachable from any browser without Tailscale installed.
 
-To review current Serve/Funnel configuration:
+To review current Serve/Funnel configuration at any time:
 
 ```bash
 sudo tailscale serve status
